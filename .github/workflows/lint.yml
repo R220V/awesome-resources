@@ -19,5 +19,5 @@ jobs:
             echo "README.md не знайдено!"
             exit 1
           else
-            echo "Все ок: README.md знайдено."
+            echo "Все   вже ок: README.md знайдено."
           fi
