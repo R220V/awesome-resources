@@ -1,0 +1,38 @@
+name: Smart README Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check if README.md exists
+        run: |
+          if [ ! -f README.md ]; then
+            echo "❌ README.md не знайдено!"
+            exit 1
+          fi
+
+      - name: Check if README.md has a heading
+        run: |
+          if ! grep -q "^# " README.md; then
+            echo "❌ README.md не має заголовку (H1)"
+            exit 1
+          else
+            echo "✅ Заголовок знайдено"
+          fi
+
+      - name: Check for at least one link
+        run: |
+          if ! grep -qE "\\[.*\\]\\(http.*\\)" README.md; then
+            echo "❌ README.md не містить жодного посилання"
+            exit 1
+          else
+            echo "✅ Є хоча б одне посилання"
+          fi
